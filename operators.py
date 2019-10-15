@@ -31,9 +31,9 @@ operators_of_language={
     "for": 29,
     "while": 30,
 }
-str(operand)
+str(operators)
 def priorityOperators(operand):
-    operands_of_language.get(operand, 0)
+    operators_of_language.get(operand, 0)
 
 
 
