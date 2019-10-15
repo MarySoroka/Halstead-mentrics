@@ -7,7 +7,7 @@ import self as self
 
 from createTable import ExampleApp
 
-flag = 0
+
 
 
 # set the value of checkbox and set te visibiality of button to open file
@@ -21,13 +21,19 @@ def setChoose():
         openFileBtn.pack()
 
 
+# show result table
+def showTable():
+    if inputText.get('0.1') == '\n':
+        messagebox.showerror('Error', 'Please, choose your file or inter your text')
+    else:
+        ExampleApp()
+        readFromTextbox()
+
+
 def readFromTextbox():
-    if inputText.get('0.1') == '':
         text = self.inputText.get('1.0', END).splitlines()
         for line in text:
             func(line.split())
-    else:
-        messagebox.showerror('Error', 'Please, choose your file or inter your text')
 
 
 # open dialog to find file and after that define variable fileName as path of the file
@@ -39,8 +45,6 @@ def openFile():
     try:
         f = open(name, 'r')
         numOfLine = 0
-        global flag
-        flag = 0
         for line in f:
             if numOfLine == 0:
                 line = line[1:]
@@ -49,15 +53,6 @@ def openFile():
             numOfLine = numOfLine + 1
     except (OSError, IOError) as e:
         messagebox.showerror('Error', 'Please, choose your file or inter your text')
-
-
-# show result table
-def showTable():
-    if inputText.get('0.1') == '':
-        messagebox.showerror('Error', 'Please, choose your file or inter your text')
-    else:
-        ExampleApp()
-        readFromTextbox()
 
 
 # addition of the all components in the main form and set their size
