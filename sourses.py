@@ -19,18 +19,39 @@ operators_of_language_single = {
     "[": 40,
     "]": 41,
     "{": 42,
-    "}": 43
+    "}": 43,
+    "'": 44,
+    '"': 45,
+    ":": 46,
+    "$": 47
 }
 operators_bracket = {
-    1: "(",
-    2: ")",
-    3: "[",
-    4: "]",
-    5: "{",
-    6: "}",
-    7: ".",
-    8: "'",
-    9: ","
+    1: "+",
+    2: "-",
+    3: "*",
+    4: "/",
+    5: "%",
+    6: ">",
+    7: "<",
+    8: "!",
+    9: "&",
+    10: "|",
+    11: "^",
+    12: "~",
+    13: "=",
+    14: "?",
+    15: ".",
+    16: "(",
+    17: ")",
+    18: "[",
+    19: "]",
+    20: "{",
+    21: "}",
+    22: "'",
+    23: '"',
+    24: ":",
+    25: "$",
+    26: ","
 }
 operators_of_language_multi = {
     "++": 1,
@@ -70,7 +91,8 @@ operators_of_language_multi = {
     "&=": 35,
     "^=": 36,
     "|=": 37,
-    "->": 38
+    "->": 38,
+    "?:": 39
 }
 word_operators_of_language = {
     "for": 1,
@@ -103,7 +125,12 @@ methods_of_language = {
     "previous": 19,
     "positive": 20,
     "negative": 21,
-    "bitwiseNegate": 22
+    "bitwiseNegate": 22,
+    "println": 23,
+    "clone": 24,
+    "start": 25,
+    "swap": 26,
+    "collect": 27
 }
 separators = {" ", ",", "{", "}"}
 
@@ -126,6 +153,8 @@ oop_delete = {
     "String[]": 16,
     "long[]": 17,
     "double[]": 18,
-    "float[]": 19
+    "float[]": 19,
+    "Collections": 20,
+    "assert": 21
 
 }
