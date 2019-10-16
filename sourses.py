@@ -137,7 +137,9 @@ oop_delete = {
     "long[]": 17,
     "double[]": 18,
     "float[]": 19,
-    "def":20
+    "def": 20,
+    "assert": 21,
+    "throw": 22
 
 
 }

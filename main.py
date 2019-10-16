@@ -6,6 +6,30 @@ from tkinter import scrolledtext, filedialog, messagebox
 from createTable import CreateTable
 from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
+#удаляю строки с импортами и пэкеджами
+def delitingOfImport(redString):
+    if redString[0] == "import" or redString[0] == "package":
+        returnString = ' '
+    return returnString
+
+#удаляю всякие распечатки строк
+def delitingOfStrings(redString):
+    finding = """"""
+    if redString.find(finding) != -1:
+        start = redString.find(finding)
+        ending = redString.rfind(finding)
+        i = 0
+        newLine = ""
+        while i < start:
+            newLine += redString[i]
+            i += 1
+        i = ending+1
+        while i < len(redString):
+            newLine += redString[i]
+            i += 1
+    return newLine
+
+
 
 def delitingOfOOP(redString):
     i = 0
