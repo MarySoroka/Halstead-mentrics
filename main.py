@@ -3,10 +3,16 @@ import sourses
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
-import self as self
+
 
 from createTable import ExampleApp
 from workWithOperators import findingOperators, findDot
+
+
+def delitingImports(redString):
+    if redString[0] == "import":
+        redString = " "
+    return redString
 
 
 def delitingOfOOP(redString):
@@ -44,11 +50,14 @@ def readFromTextbox():
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        lineWithDot = delitingOfOOP(line.split())
-        operators, operands = findingOperators(findDot(lineWithDot))
-        resultListOfOperators.extend(operators)
-        resultOfOperands.extend(operands)
+        clearLine = delitingImports(line.split())
+        if clearLine != " ":
+             lineWithDot = delitingOfOOP(clearLine)
+             operators, operands = findingOperators(findDot(lineWithDot))
+             resultListOfOperators.extend(operators)
+             resultOfOperands.extend(operands)
     return resultListOfOperators, resultOfOperands
+
 
 # open dialog to find file and after that define variable fileName as path of the file
 # read from file by lines and write into text area in the main form

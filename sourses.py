@@ -52,7 +52,8 @@ operators_of_language_multi = {
     ">>>=": 34,
     "&=": 35,
     "^=": 36,
-    "|=": 37
+    "|=": 37,
+    "->": 38
 }
 word_operators_of_language = {
     "for": 1,
@@ -61,7 +62,17 @@ word_operators_of_language = {
     "type": 4,
     "in": 5,
     "instanceof": 6,
-    "as": 7
+    "as": 7,
+    "switch": 8,
+    "case": 9,
+    "println": 10,
+    "break": 11,
+    "try": 12,
+    "if": 13,
+    "else": 14,
+    "catch": 15,
+    "finally": 16,
+
 }
 methods_of_language = {
     "plus":1,
@@ -108,7 +119,9 @@ oop_delete = {
     "String[]": 16,
     "long[]": 17,
     "double[]": 18,
-    "float[]": 19
+    "float[]": 19,
+    "def":20
+
 
 }
 

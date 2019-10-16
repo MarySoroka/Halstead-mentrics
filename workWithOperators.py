@@ -3,12 +3,13 @@ from ourclass import Record
 
 
 def countingOperands(words, i):
-    operand = Record(words[i], 1, 0)
+    operand = Record(words[i], 0, 0)
     operand.name = words[i]
     if i+1<len(words) and words[i + 1] == '=':
         operand.initialization += 1
     else:
-        operand.usability +=1
+        if not(i+1<len(words) and words[i-1] == "=" and words[i].isdigit()):
+            operand.usability += 1
     return operand
 
 
@@ -31,6 +32,8 @@ def findingOperators(words):
             else:
                 listOfOperands.append(countingOperands(words, i))
         i += 1
+
+    listOfOperators.sort
     return listOfOperators, listOfOperands
 
 def findDot(line):
