@@ -1,19 +1,21 @@
 import tkinter
-
+import sourses
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
 import self as self
 
 from createTable import ExampleApp
+from workWithOperators import findingOperators, findDot
+
 
 def delitingOfOOP(redString):
     i = 0
-    while i<len(redString):
-        if oop_delete.get(redString[i], 0) != 0:
+    while i < len(redString):
+        if sourses.oop_delete.get(redString[i], 0) != 0:
             del redString[i]
+        i += 1
     return redString
-
 
 
 # set the value of checkbox and set te visibiality of button to open file
@@ -36,14 +38,17 @@ def showTable():
         readFromTextbox()
 
 
+
 def readFromTextbox():
-        text = self.inputText.get('1.0', END).splitlines()
-        for line in text:
-            text = text + delitingOfOOP(line.split())
-        for line in text:
-            findingOperators(line.split())
-
-
+    resultListOfOperators = []
+    resultOfOperands = []
+    text = inputText.get('1.0', END).splitlines()
+    for line in text:
+        lineWithDot = delitingOfOOP(line.split())
+        operators, operands = findingOperators(findDot(lineWithDot))
+        resultListOfOperators.extend(operators)
+        resultOfOperands.extend(operands)
+    return resultListOfOperators, resultOfOperands
 
 # open dialog to find file and after that define variable fileName as path of the file
 # read from file by lines and write into text area in the main form
