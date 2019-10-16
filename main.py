@@ -1,5 +1,6 @@
 import tkinter
 import sourses
+import ourclass
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
@@ -35,7 +36,7 @@ def delitingOfStrings(redString):
 #создание листа с операторами и их подсчётом
 def editingOperatorsList(listOfOperators):
     listOfOperators.sort
-    i=0
+    i = 0
     while i < len(listOfOperators)-1:
         count = 0
         j=i+1
@@ -45,6 +46,9 @@ def editingOperatorsList(listOfOperators):
                 j += 1
             else:
                 break
+        operatorss= ourclass.RecordOperators(listOfOperators[j - 1], count)
+        i=j
+    return operatorss
 
 
 
