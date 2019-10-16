@@ -12,7 +12,7 @@ def bubbleSort = {array ->
   }
   array
 }
-
+println("1. Enviar arquivo ao Cliente.\n")
 def array = createRandomArray(10)
 
 println "start : ${array}"

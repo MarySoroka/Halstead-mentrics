@@ -1,10 +1,56 @@
 import tkinter
 import sourses
+import ourclass
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
 from createTable import CreateTable
 from workWithOperators import findingOperators, findDot, deleteRepeatObj
+
+#удаляю строки с импортами и пэкеджами
+def delitingOfImport(redString):
+    if redString[0] == "import" or redString[0] == "package":
+        returnString = ' '
+        return returnString
+    else:
+        return redString
+
+
+#удаляю всякие распечатки строк
+def delitingOfStrings(redString):
+    finding = """"""
+    if redString.find(finding) != -1:
+        start = redString.find(finding)
+        ending = redString.rfind(finding)
+        i = 0
+        newLine = ""
+        while i < start:
+            newLine += redString[i]
+            i += 1
+        i = ending+1
+        while i < len(redString):
+            newLine += redString[i]
+            i += 1
+    return newLine
+
+#создание листа с операторами и их подсчётом
+def editingOperatorsList(listOfOperators):
+    listOfOperators.sort
+    i = 0
+    while i < len(listOfOperators)-1:
+        count = 0
+        j=i+1
+        while j < len(listOfOperators):
+            if listOfOperators[i] == listOfOperators[j]:
+                count += 1
+                j += 1
+            else:
+                break
+        operatorss= ourclass.RecordOperators(listOfOperators[j - 1], count)
+        i=j
+    return operatorss
+
+
 
 
 def delitingOfOOP(redString):
@@ -47,6 +93,7 @@ def readFromTextbox():
         resultListOfOperators.extend(operators)
         resultOfOperands.extend(operands)
     return resultListOfOperators, resultOfOperands
+
 
 
 # open dialog to find file and after that define variable fileName as path of the file
