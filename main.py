@@ -7,6 +7,12 @@ import self as self
 
 from createTable import ExampleApp
 
+def delitingOfOOP(redString):
+    i = 0
+    while i<len(redString):
+        if oop_delete.get(redString[i], 0) != 0:
+            del redString[i]
+    return redString
 
 
 
@@ -33,7 +39,10 @@ def showTable():
 def readFromTextbox():
         text = self.inputText.get('1.0', END).splitlines()
         for line in text:
-            func(line.split())
+            text = text + delitingOfOOP(line.split())
+        for line in text:
+            findingOperators(line.split())
+
 
 
 # open dialog to find file and after that define variable fileName as path of the file
