@@ -3,16 +3,8 @@ import sourses
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
-
-
-from createTable import ExampleApp
-from workWithOperators import findingOperators, findDot
-
-
-def delitingImports(redString):
-    if redString[0] == "import":
-        redString = " "
-    return redString
+from createTable import CreateTable
+from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
 
 def delitingOfOOP(redString):
@@ -40,9 +32,9 @@ def showTable():
     if inputText.get('0.1') == '\n':
         messagebox.showerror('Error', 'Please, choose your file or inter your text')
     else:
-        ExampleApp()
-        readFromTextbox()
-
+        list1, list2 = readFromTextbox()
+        list2 = deleteRepeatObj(list2)
+        CreateTable(list1, list2)
 
 
 def readFromTextbox():
@@ -50,12 +42,10 @@ def readFromTextbox():
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        clearLine = delitingImports(line.split())
-        if clearLine != " ":
-             lineWithDot = delitingOfOOP(clearLine)
-             operators, operands = findingOperators(findDot(lineWithDot))
-             resultListOfOperators.extend(operators)
-             resultOfOperands.extend(operands)
+        lineWithDot = delitingOfOOP(line.split())
+        operators, operands = findingOperators(findDot(lineWithDot))
+        resultListOfOperators.extend(operators)
+        resultOfOperands.extend(operands)
     return resultListOfOperators, resultOfOperands
 
 
