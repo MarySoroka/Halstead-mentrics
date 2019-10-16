@@ -4,7 +4,7 @@ from ourclass import Record
 
 def countingOperands(words, i):
     operand = Record(words[i], 0, 0)
-    operand.name = words[i]
+
     if i + 1 < len(words) and words[i + 1] == '=':
         operand.initialization += 1
     else:
@@ -14,10 +14,10 @@ def countingOperands(words, i):
 
 def deleteRepeatObj(listOfObj):
     i = 0
-    j = 0
     while i < len(listOfObj):
+        j = 0
         while j < len(listOfObj):
-            if listOfObj[i].name == listOfObj[j].name:
+            if listOfObj[i].name == listOfObj[j].name and j != i:
                 listOfObj[i].initialization += listOfObj[j].initialization
                 listOfObj[i].usability += listOfObj[j].usability
                 del listOfObj[j]
@@ -47,7 +47,6 @@ def findingOperators(words):
             else:
                 listOfOperands.append(countingOperands(words, i))
         i += 1
-    listOfOperands = deleteRepeatObj(listOfOperands)
     return listOfOperators, listOfOperands
 
 
