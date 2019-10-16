@@ -89,8 +89,28 @@ methods_of_language = {
 }
 separators = {" ", ",", "{", "}"}
 
+oop_delete = {
+    "public": 1,
+    "private": 2,
+    "protected": 3,
+    "package-private": 4,
+    "static": 5,
+    "class": 6,
+    "final": 7,
+    "String": 8,
+    "int": 9,
+    "long": 10,
+    "float": 11,
+    "double": 12,
+    "byte": 13,
+    "byte[]": 14,
+    "int[]": 15,
+    "String[]": 16,
+    "long[]": 17,
+    "double[]": 18,
+    "float[]": 19
 
-
+}
 
 
 

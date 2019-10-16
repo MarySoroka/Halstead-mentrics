@@ -1,5 +1,5 @@
 class MyClass(object):
-    def __init__(self, name, initialization, usability):
+    def __init__(self, name, amount, usability):
         self.name = name
         self.initialization = initialization
         self.usability = usability
