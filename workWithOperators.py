@@ -1,7 +1,7 @@
 import sourses
 from ourclass import Record
 
-
+#cretion of object list
 def countingOperands(words, i):
     operand = Record(words[i], 0, 0)
 
@@ -11,7 +11,7 @@ def countingOperands(words, i):
         operand.usability += 1
     return operand
 
-
+#delete one of the same object and define usebility
 def deleteRepeatObj(listOfObj):
     i = 0
     while i < len(listOfObj):
@@ -25,7 +25,7 @@ def deleteRepeatObj(listOfObj):
         i += 1
     return listOfObj
 
-
+#finding operators and operands
 def findingOperators(words):
     i = 0
     listOfOperators = []
@@ -49,7 +49,7 @@ def findingOperators(words):
         i += 1
     return listOfOperators, listOfOperands
 
-
+#define list of words without the of being operand and operator together
 def findDot(line):
     i = 0
     resultLine = []
@@ -73,7 +73,7 @@ def findDot(line):
 
     return resultLine
 
-
+#finding simbols in words which is in operators_bracket vocabulary and addition space before and after them
 def findBrackets(word):
     k = 0
     while k < len(word) and k + 1 != " ":

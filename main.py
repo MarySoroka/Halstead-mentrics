@@ -52,7 +52,7 @@ def editingOperatorsList(listOfOperators):
 
 
 
-
+#delete oop words
 def delitingOfOOP(redString):
     i = 0
     while i < len(redString):
