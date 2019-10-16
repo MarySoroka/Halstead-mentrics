@@ -32,9 +32,9 @@ def findingOperators(words):
             else:
                 listOfOperands.append(countingOperands(words, i))
         i += 1
-
     listOfOperators.sort
     return listOfOperators, listOfOperands
+
 
 def findDot(line):
     i = 0
