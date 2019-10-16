@@ -1,4 +1,4 @@
-operators_of_language_single={
+operators_of_language_single = {
     "+": 1,
     "-": 2,
     "*": 3,
@@ -13,7 +13,24 @@ operators_of_language_single={
     "~": 12,
     "=": 13,
     "?": 14,
-    ".": 37
+    ".": 37,
+    "(": 38,
+    ")": 39,
+    "[": 40,
+    "]": 41,
+    "{": 42,
+    "}": 43
+}
+operators_bracket = {
+    1: "(",
+    2: ")",
+    3: "[",
+    4: "]",
+    5: "{",
+    6: "}",
+    7: ".",
+    8: "'",
+    9: ","
 }
 operators_of_language_multi = {
     "++": 1,
@@ -52,7 +69,8 @@ operators_of_language_multi = {
     ">>>=": 34,
     "&=": 35,
     "^=": 36,
-    "|=": 37
+    "|=": 37,
+    "->": 38
 }
 word_operators_of_language = {
     "for": 1,
@@ -64,7 +82,7 @@ word_operators_of_language = {
     "as": 7
 }
 methods_of_language = {
-    "plus":1,
+    "plus": 1,
     "minus": 2,
     "multiply": 3,
     "div": 4,
@@ -111,6 +129,3 @@ oop_delete = {
     "float[]": 19
 
 }
-
-
-

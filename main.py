@@ -3,8 +3,6 @@ import sourses
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
-import self as self
-
 from createTable import ExampleApp
 from workWithOperators import findingOperators, findDot
 
