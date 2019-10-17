@@ -32,7 +32,7 @@ class Table(tk.Frame):
                         i += 1
                 else:
                     table.insert(values=createStringForOutput(i, operators[i].name, operators[i].amount, j,
-                                                              operands[j].name, operands[i].usability))
+                                                              operands[j].name, operands[j].usability))
                     i += 1
                     j += 1
         else:
@@ -44,7 +44,7 @@ class Table(tk.Frame):
                         j += 1
                 else:
                     table.insert(values=createStringForOutput(i, operators[i].name, operators[i].amount, j,
-                                                              operands[j].name, operands[i].usability))
+                                                              operands[j].name, operands[j].usability))
                     i += 1
                     j += 1
         scrolltable = tk.Scrollbar(self, command=table.yview)
