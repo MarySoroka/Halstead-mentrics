@@ -90,7 +90,7 @@ def showTable():
             i += 1
 
         programPower = programmLength * math.log2(programmDictionary)
-        createTable(list1, list2)
+        createTable(list1, list2, str(int(programPower)))
 
 
 def readFromTextbox():
