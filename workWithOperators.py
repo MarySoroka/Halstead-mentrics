@@ -1,5 +1,13 @@
 import sourses
 from ourclass import Record
+from ourclass import RecordOperators
+
+
+#cretion of object list
+def countingOperators(word):
+    operators = RecordOperators(word, 1)
+    return operators
+
 
 #cretion of object list
 def countingOperands(words, i):
@@ -36,14 +44,12 @@ def findingOperators(words):
             res = sourses.operators_of_language_single.get(word, 0)
             # если входит то оператор, а если нет, то явный операнд
             if res != 0:
-                listOfOperators.append(word)  # добавляю в список операторов
+                listOfOperators.append(countingOperators(word))  # добавляю в список операторов
             else:
                 listOfOperands.append(countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
         elif len(word) > 1:
-            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word,
-                                                                                                               0) != 0 or sourses.methods_of_language.get(
-                word, 0) != 0:
-                listOfOperators.append(word)
+            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word, 0) != 0 or sourses.methods_of_language.get(word, 0) != 0:
+                listOfOperators.append(countingOperators(word))
             else:
                 listOfOperands.append(countingOperands(words, i))
         i += 1

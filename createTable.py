@@ -22,7 +22,8 @@ class CreateTable(tk.Tk):
         k = 1
         while k < len(operators):
             t.set(k, 0, k + 1)
-            t.set(k, 1, operators[k-1])
+            t.set(k, 1, operators[k-1].name)
+            t.set(k, 2, operators[k - 1].amount)
             k += 1
 
         k = 1
