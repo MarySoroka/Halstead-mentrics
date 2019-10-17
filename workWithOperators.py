@@ -58,7 +58,7 @@ def findingOperators(words):
             if res != 0:
                 listOfOperators.append(countingOperators(word))  # добавляю в список операторов
             else:
-                if not(words[i-1] > 0 and words[i-1] == "=" and bool(word.isdigit)):
+                if not(len(words[i-1]) > 0 and words[i-1] == "=" and bool(word.isdigit)):
                      listOfOperands.append(countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
         elif len(word) > 1:
             if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word, 0) != 0 or sourses.methods_of_language.get(word, 0) != 0:

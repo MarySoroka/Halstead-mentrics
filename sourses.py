@@ -155,6 +155,7 @@ oop_delete = {
     "double[]": 18,
     "float[]": 19,
     "Collections": 20,
-    "assert": 21
+    "assert": 21,
+    "def": 22
 
 }
