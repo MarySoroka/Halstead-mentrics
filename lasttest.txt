@@ -1,0 +1,218 @@
+/**
+ * Объектно-ориентированное программирование на Groovy
+ * ===================================================
+ */
+
+class Account {
+    String name
+    BigDecimal value
+}
+
+// конструктор по умолчанию добавляется автоматически
+// такой конструктор - синтаксический сахар для 
+// a = new Account()
+// a.setName("Account #1")
+// a.setValue(new BigDecimal(10))
+a = new Account(name : "Account #1", value : new BigDecimal(10))
+
+// геттеры и сеттеры генерируются автоматически
+def name = a.getName()
+a.setName("Account #2")
+println "$a.name"
+
+class Person {
+    def first
+    def last
+
+    // явно задаем сеттер
+    void setFirst(first) {
+        this.first = first
+    }
+}
+
+p = new Person(first : "A", last : "G")
+// если обращаться к полю, то будет использоваться сеттер
+p.first = "C"
+
+println "${p.first} ${p.last}"
+
+// наследвание как в java
+class ExtendedAccount extends Account {
+    def debt
+    
+    // задаем конструктор
+    ExtendedAccount(name, value, debt) {
+        setName(name)
+        setValue(value)
+        setDebt(debt)
+    }
+    
+    def String toString() {
+        "${name} ${value} ${debt}"
+    }
+}
+
+// тут будет ошибка "Could not find matching constructor for: ExtendedAccount()"
+//e = new ExtendedAccount()
+
+
+println new ExtendedAccount("A", new BigDecimal(10), 1)
+
+
+
+/*
+    coordinate 2D calculation #1
+*/
+
+/**
+ * Make Point Class
+*/
+class Point2D {
+    double x, y;
+
+/* 
+    Creating a point defenition method
+*/
+    Point2D(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+/* 
+    Creating a point calculation method
+*/
+
+    Point2D plus(Point2D p) {
+        new Point2D(this.x + p.x, this.y + p.y);
+    }
+
+}
+
+// initialization and calculations 
+Point2D p = new Point2D(1, 2)
+Point2D p2 = new Point2D(3, 4)
+Point2D p3 = p + p2 + p
+
+// Output
+println("$p3.x $p3.y")
+
+
+/**
+ * Задача "Рациональная дробь"
+ */
+class Rational implements Comparable {
+    long p, q
+
+    long GCD(long a, long b) {
+        b == 0L ? a : GCD(b, a % b)
+    }
+
+    Rational(p, q) {
+        long d = GCD(p, q)
+        this.p = p / d
+        this.q = q / d
+    }
+
+    // a + b
+    Rational plus(Rational b) {
+        // TODO: реализовать
+        new Rational(p * b.q + b.p * q, q * b.q)
+    }
+    // a - b
+    Rational minus(Rational b) {
+        // TODO: реализовать
+        new Rational(p * b.q - b.p * q, q * b.q)
+    }
+    // a * b
+    Rational multiply(Rational b) {
+        // TODO: реализовать
+        new Rational(p * b.p, q * b.q)
+    }
+    // a / b
+    Rational div(Rational b) {
+        // TODO: реализовать
+        new Rational(p * b.q, q * b.p)
+    }
+    // a ** b
+    Rational power(long b) {
+        // TODO: реализовать
+        new Rational(p**b, q**b)
+    }
+
+    // a == b   a.equals(b)
+    // a != b  !a.equals(b)
+    @Override
+    boolean equals(Object o) {
+        Rational r = (Rational) o;
+        if (r == null) return false
+        // p / q = r.p / r.q
+        p * r.q == r.p * q
+    }
+
+    // a <=> b  a.compareTo(b)
+    // a > b    a.compareTo(b) > 0
+    // a >= b   a.compareTo(b) >= 0
+    // a < b    a.compareTo(b) < 0
+    // a <= b   a.compareTo(b) <= 0
+    // Нужно: implements Comparable
+    @Override
+    int compareTo(r) {
+        // Другой вариант: p * r.q - r.p * q
+        p * r.q <=> r.p * q
+    }
+
+    @Override
+    String toString() {
+        p + "/" + q
+    }
+}
+
+Rational a = new Rational(1, 2), b = new Rational(1, 3)
+println "" + a + " + " + b + " = " + (a + b)
+
+assert new Rational(1, 2) < new Rational(2, 2)
+assert new Rational(1, 2) <= new Rational(2, 2)
+assert new Rational(3, 2) > new Rational(1, 1)
+assert new Rational(3, 2) >= new Rational(1, 1)
+assert new Rational(1, 2) == new Rational(2, 4)
+assert (new Rational(1, 2) <=> new Rational(2, 4)) == 0
+
+
+/*
+    coordinate 3D calculation #1
+*/
+
+/**
+ * Make Point Class
+*/
+
+class Point3D {
+    double ox, oy, oz;
+
+/* 
+    Creating a point defenition method
+*/
+
+    Point3D(double ox, double oy, double oz) {
+        this.ox = ox;
+        this.oy = oy;
+        this.oz = oz
+    }
+    
+/* 
+    Creating a point calculation method
+*/
+
+    Point3D plus(Point3D op) {
+        new Point3D(this.ox + op.ox, this.oy + op.oy, this.oz + op.oz);
+    }
+
+}
+
+Point3D op = new Point3D(0, 3, 7)
+Point3D op2 = new Point3D(7, 9, 3)
+Point3D op3 = op + op2 + op
+println("$op3.ox $op3.oy $op3.oz" )
+
+// Output
+println("$op3.x $op3.y $op3.oz")
