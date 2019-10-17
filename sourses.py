@@ -23,7 +23,8 @@ operators_of_language_single = {
     "'": 44,
     '"': 45,
     ":": 46,
-    "$": 47
+    "$": 47,
+    ";": 48
 }
 operators_bracket = {
     1: "+",
@@ -51,7 +52,8 @@ operators_bracket = {
     23: '"',
     24: ":",
     25: "$",
-    26: ","
+    26: ",",
+    27: ";"
 }
 operators_of_language_multi = {
     "++": 1,
@@ -101,7 +103,8 @@ word_operators_of_language = {
     "type": 4,
     "in": 5,
     "instanceof": 6,
-    "as": 7
+    "as": 7,
+    "it":8
 }
 methods_of_language = {
     "plus": 1,

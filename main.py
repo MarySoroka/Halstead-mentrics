@@ -75,7 +75,8 @@ def delitingOfOOP(redString):
     while i < len(redString):
         if sourses.oop_delete.get(redString[i], 0) != 0:
             del redString[i]
-        i += 1
+        else:
+            i += 1
     return redString
 
 

@@ -5,14 +5,14 @@ import java.util.function.Consumer
 
 // creating of the chat
 class ChatCommands {
-    //defile fields of the class
-    private static final Logger logger = LoggerFactory.getLogger(ChatCommands.class)
+    // defile fields of the class
+    private static final Logger logger = LoggerFactory.getLogger(ChatCommands)
 
     private final List<Consumer<ChatMessageIncoming>> consumers = new ArrayList<>()
     private final DugaTasks tasks
     private final DugaBotService bot
 
-    //methods with chat commands
+    // methods with chat commands
     ChatCommands(DugaChatListener bean) {
         this.tasks = bean.tasks
         this.bot = bean.chatBot
@@ -51,7 +51,7 @@ class ChatCommands {
                 }
             }
         }
-        //fuction for customer
+        // fuction for customer
         consumers << {ChatMessageIncoming event ->
             if (event.content.contains('add follow')) {
                 Followed.withNewSession { status ->
@@ -117,7 +117,7 @@ class ChatCommands {
            println "end : ${afterArray}"
            assert bk.sort() == afterArray
     }
-    //create random array
+    // create random array
     def createRandomArray = {size ->
       (0..<size).collect {
         (Math.floor(Math.random() * 10) + 1) as int
