@@ -9,11 +9,13 @@ from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
 #удаляю строки с импортами и пэкеджами
 def delitingOfImport(redString):
-    if redString[0] == "import" or redString[0] == "package":
-        returnString = ' '
-        return returnString
-    else:
-        return redString
+    i=0
+    while i<len(redString):
+        if redString[i] == "import" or redString[i] == "package" or redString[i] == "//":
+            returnString = ' '
+            return returnString
+        i += 1
+    return redString
 
 
 #удаляю всякие распечатки строк
@@ -98,10 +100,12 @@ def readFromTextbox():
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        lineWithDot = delitingOfOOP(line.split())
-        operators, operands = findingOperators(findDot(lineWithDot))
-        resultListOfOperators.extend(operators)
-        resultOfOperands.extend(operands)
+        lineWithoutImport = delitingOfImport(line.split())
+        if lineWithoutImport != " ":
+            lineWithDot = delitingOfOOP(lineWithoutImport)
+            operators, operands = findingOperators(findDot(lineWithDot))
+            resultListOfOperators.extend(operators)
+            resultOfOperands.extend(operands)
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
     return finalOperatorsList, resultOfOperands
 
