@@ -36,13 +36,18 @@ def delitingOfStrings(redString):
 #создание листа с операторами и их подсчётом
 def editingOperatorsList(listOfOperators):
     i = 0
-    while i < len(listOfOperators):
-        j = 0
-        while j < len(listOfOperators):
-            if listOfOperators[i].name == listOfOperators[j].name and j != i:
+    h = 0
+    length = len(listOfOperators)
+    while i < length:
+        j = i+1
+        while j < length:
+            if listOfOperators[i].name == listOfOperators[j].name:
                 listOfOperators[i].amount = listOfOperators[i].amount + listOfOperators[j].amount
                 del listOfOperators[j]
-            j += 1
+                h += 1
+                length = len(listOfOperators)
+            else:
+                j += 1
         i += 1
     return listOfOperators
 

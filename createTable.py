@@ -71,8 +71,8 @@ class Table(tk.Frame):
         table.insert('', tk.END, values=createStringForOutput('', '', '', '', '',''))
         table.insert('', tk.END, values=createStringForOutput('', '', '', '', '', ''))
 
-        table.insert('', tk.END, values=createStringForOutput('dictionary',sum1(str(len(operators)),sum(operatorsAm)) , '', '', '', ''))
-        table.insert('', tk.END, values=createStringForOutput('length', sum1(sum(operandsUse),sum(operandsUse)), '', '', '', ''))
+        table.insert('', tk.END, values=createStringForOutput('dictionary',sum1((len(operators)),(len(operands))) , '', '', '', ''))
+        table.insert('', tk.END, values=createStringForOutput('length', sum1(int(sum(operatorsAm)),int(sum(operandsUse))), '', '', '', ''))
         table.insert('', tk.END, values=createStringForOutput('power', pw, '', '', '', ''))
 
         scrolltable = tk.Scrollbar(self, command=table.yview)

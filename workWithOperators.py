@@ -30,13 +30,14 @@ def countingOperands(words, i):
 def deleteRepeatObj(listOfObj):
     i = 0
     while i < len(listOfObj):
-        j = 0
+        j = i +1
         while j < len(listOfObj):
-            if listOfObj[i].name == listOfObj[j].name and j != i:
+            if listOfObj[i].name == listOfObj[j].name:
                 listOfObj[i].initialization = listOfObj[i].initialization + listOfObj[j].initialization
                 listOfObj[i].usability = listOfObj[i].usability + listOfObj[j].usability
                 del listOfObj[j]
-            j += 1
+            else:
+                j +=1
         i += 1
     i = 0
     while i < len(listOfObj):
