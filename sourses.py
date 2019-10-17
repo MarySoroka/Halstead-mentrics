@@ -130,7 +130,8 @@ methods_of_language = {
     "clone": 24,
     "start": 25,
     "swap": 26,
-    "collect": 27
+    "collect": 27,
+    "sort": 28
 }
 separators = {" ", ",", "{", "}"}
 

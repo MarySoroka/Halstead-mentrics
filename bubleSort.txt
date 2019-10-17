@@ -1,3 +1,5 @@
+// конструктор по умолчанию добавляется автоматически
+import java.nio.file.Paths
 def createRandomArray = {size ->
   (0..<size).collect {
     (Math.floor(Math.random() * 10) + 1) as int
