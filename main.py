@@ -92,6 +92,7 @@ def showTable():
             i += 1
         programPower = programmLength * math.log2(programmDictionary)
 
+
         CreateTable(list1, list2)
 
 
