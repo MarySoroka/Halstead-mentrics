@@ -7,6 +7,18 @@ from tkinter import scrolledtext, filedialog, messagebox
 from createTable import createTable
 from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
+
+def delitingMultiComments(redString):
+    i = 0
+    while i<len(redString):
+        if redString[i] == "/**" or redString[i] == "*" or redString[i] == "*/" or redString[i] == "/*" :
+            retStr = " "
+            return retStr
+        else:
+            i += 1
+    return redString
+
+
 #удаляю строки с импортами и пэкеджами
 def delitingOfImport(redString):
     i=0
@@ -20,19 +32,21 @@ def delitingOfImport(redString):
 
 #удаляю всякие распечатки строк
 def delitingOfStrings(redString):
-    finding = """"""
+    finding = '"'
+    newLine = " "
     if redString.find(finding) != -1:
         start = redString.find(finding)
         ending = redString.rfind(finding)
         i = 0
-        newLine = ""
-        while i < start:
+        while i <= start:
             newLine += redString[i]
             i += 1
-        i = ending+1
+        i = ending
         while i < len(redString):
             newLine += redString[i]
             i += 1
+    else:
+        newLine = redString
     return newLine
 
 #создание листа с операторами и их подсчётом
@@ -105,12 +119,16 @@ def readFromTextbox():
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        lineWithoutImport = delitingOfImport(line.split())
-        if lineWithoutImport != " ":
-            lineWithDot = delitingOfOOP(lineWithoutImport)
-            operators, operands = findingOperators(findDot(lineWithDot))
-            resultListOfOperators.extend(operators)
-            resultOfOperands.extend(operands)
+        delStringLine = delitingOfStrings(line)
+        anotherDel = delitingMultiComments(delStringLine.split())
+        if anotherDel != " ":
+            lineWithoutImport = delitingOfImport(anotherDel)
+            if lineWithoutImport != " ":
+                lineWithDot = delitingOfOOP(lineWithoutImport)
+                operators, operands = findingOperators(findDot(lineWithDot))
+                resultListOfOperators.extend(operators)
+                resultOfOperands.extend(operands)
+
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
     return finalOperatorsList, resultOfOperands
 
