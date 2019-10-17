@@ -1,11 +1,26 @@
 import sourses
 from ourclass import Record
+from ourclass import RecordOperators
+
+
+#cretion of object list
+def countingOperators(word):
+    operators = RecordOperators(word, 1)
+    return operators
+
 
 #cretion of object list
 def countingOperands(words, i):
     operand = Record(words[i], 0, 0)
-
     if i + 1 < len(words) and words[i + 1] == '=':
+        operand.initialization += 1
+    elif i < len(words) and words[i - 1] == '=':
+        operand.usability += 1
+    elif i < len(words) and words[i-1] == ".":
+        operand.usability += 1
+    elif i +1 < len(words) and words[i-1] == "." and words[i+1] == ".":
+        operand.usability += 1
+    elif len(words) == 1:
         operand.initialization += 1
     else:
         operand.usability += 1
@@ -23,6 +38,11 @@ def deleteRepeatObj(listOfObj):
                 del listOfObj[j]
             j += 1
         i += 1
+    i = 0
+    while i < len(listOfObj):
+        if listOfObj[i].usability == 0:
+            del listOfObj[i]
+        i += 1
     return listOfObj
 
 #finding operators and operands
@@ -36,14 +56,13 @@ def findingOperators(words):
             res = sourses.operators_of_language_single.get(word, 0)
             # если входит то оператор, а если нет, то явный операнд
             if res != 0:
-                listOfOperators.append(word)  # добавляю в список операторов
+                listOfOperators.append(countingOperators(word))  # добавляю в список операторов
             else:
-                listOfOperands.append(countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
+                if not(words[i-1] > 0 and words[i-1] == "=" and bool(word.isdigit)):
+                     listOfOperands.append(countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
         elif len(word) > 1:
-            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word,
-                                                                                                               0) != 0 or sourses.methods_of_language.get(
-                word, 0) != 0:
-                listOfOperators.append(word)
+            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word, 0) != 0 or sourses.methods_of_language.get(word, 0) != 0:
+                listOfOperators.append(countingOperators(word))
             else:
                 listOfOperands.append(countingOperands(words, i))
         i += 1
