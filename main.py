@@ -76,6 +76,7 @@ def showTable():
     else:
         list1, list2 = readFromTextbox()
         list2 = deleteRepeatObj(list2)
+
         # считаю метрики
         programmDictionary = len(list1) + len(list2)
         programmLength = 0
@@ -87,6 +88,7 @@ def showTable():
         while i < len(list2):
             programmLength += list2[i].initialization + list2[i].usability
             i += 1
+
         programPower = programmLength * math.log2(programmDictionary)
         createTable(list1, list2)
 
