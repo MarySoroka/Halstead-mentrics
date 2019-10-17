@@ -4,7 +4,7 @@ import ourclass
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
-from createTable import CreateTable
+from createTable import createTable
 from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
 #удаляю строки с импортами и пэкеджами
@@ -80,7 +80,7 @@ def showTable():
     else:
         list1, list2 = readFromTextbox()
         list2 = deleteRepeatObj(list2)
-        CreateTable(list1, list2)
+        createTable(list1)
 
 
 def readFromTextbox():

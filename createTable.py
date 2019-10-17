@@ -1,60 +1,64 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 
 
-class CreateTable(tk.Tk):
-    def __init__(self, operators, operands):
-        tk.Tk.__init__(self)
-        t = SimpleTable(self, len(operators), 6)
-        t.pack(side="top", fill="x")
-        t.set(0, 0, "j")
-        t.set(0, 1, "operators")
-        t.set(0, 2, "F1j")
-        t.set(0, 3, "i")
-        t.set(0, 4, "operands")
-        t.set(0, 5, "F2i")
-        k = 1
+def createTable(opr):
+    root = tk.Tk()
 
-        while k < 30:
-            t.set(k, 0, k)
-            t.set(k, 1, k + 1)
-            k += 1
-
-        k = 1
-        while k < len(operators):
-            t.set(k, 0, k + 1)
-            t.set(k, 1, operators[k-1])
-            k += 1
-
-        k = 1
-        while k < len(operands):
-            t.set(k, 3, k + 1)
-            t.set(k, 4, operands[k-1].name)
-            t.set(k, 5, operands[k-1].usability)
-            k += 1
+    table = Table(root, headings=('i', 'operators', 'F1i', 'j', 'operands', 'F2j'), operators=tuple(opr))
+    table.pack(expand=tk.YES, fill=tk.BOTH)
+    root.mainloop()
 
 
-class SimpleTable(tk.Frame):
-    def __init__(self, parent, rows, columns=6):
-        # use black background so it "peeks through" to
-        # form grid lines
-        tk.Frame.__init__(self, parent, background="black")
-        self._widgets = []
-        for row in range(rows):
-            current_row = []
-            for column in range(columns):
-                label = tk.Label(self, text=" ", borderwidth=0, width=20)
-                label.grid(row=row, column=column, sticky="nsew", padx=1, pady=1)
-                current_row.append(label)
-            self._widgets.append(current_row)
+class Table(tk.Frame):
+    def __init__(self, parent=None, headings=tuple(), operators=tuple(), operands=tuple()):
+        super().__init__(parent)
 
-        for column in range(columns):
-            self.grid_columnconfigure(column, weight=1)
+        table = ttk.Treeview(self, show="headings", selectmode="browse")
+        table["columns"] = headings
+        table["displaycolumns"] = headings
 
-    def set(self, row, column, value):
-        widget = self._widgets[row][column]
-        widget.configure(text=value)
+        for head in headings:
+            table.heading(head, text=head, anchor=tk.CENTER)
+            table.column(head, anchor=tk.CENTER)
+        i = 0
+        j = 0
+        if len(operators) >= len(operands):
+            while i < len(operators):
+                if j > len(operands):
+                    while i < len(operators):
+                        table.insert(values=createStringForOutput(i, operators[i].name, operators[i].usability, '',
+                                                                  '', ''))
+                        i += 1
+                else:
+                    table.insert(values=createStringForOutput(i, operators[i].name, operators[i].amount, j,
+                                                              operands[j].name, operands[i].usability))
+                    i += 1
+                    j += 1
+        else:
+            while j < len(operands):
+                if i > len(operators):
+                    while j < len(operands):
+                        table.insert(values=createStringForOutput('', '', '', j,
+                                                                  operands[j].name, operands[i].usability))
+                        j += 1
+                else:
+                    table.insert(values=createStringForOutput(i, operators[i].name, operators[i].amount, j,
+                                                              operands[j].name, operands[i].usability))
+                    i += 1
+                    j += 1
+        scrolltable = tk.Scrollbar(self, command=table.yview)
+        table.configure(yscrollcommand=scrolltable.set)
+        scrolltable.pack(side=tk.RIGHT, fill=tk.Y)
+        table.pack(expand=tk.YES, fill=tk.BOTH)
 
 
-if __name__ == "__main__":
-    app = CreateTable()
-    app.mainloop()
+def createStringForOutput(k1, operator, usability1, k2, operand, usability2):
+    value = []
+    value[0] = k1
+    value[1] = operator
+    value[2] = usability1
+    value[3] = k2
+    value[4] = operand
+    value[5] = usability2
+    return value
