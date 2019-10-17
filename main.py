@@ -1,5 +1,6 @@
 import tkinter
 import sourses
+import math
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
@@ -75,6 +76,18 @@ def showTable():
     else:
         list1, list2 = readFromTextbox()
         list2 = deleteRepeatObj(list2)
+        # считаю метрики
+        programmDictionary = len(list1) + len(list2)
+        programmLength = 0
+        i = 0
+        while i < len(list1):
+            programmLength += list1[i].amount
+            i += 1
+        i = 0
+        while i < len(list2):
+            programmLength += list2[i].initialization + list2[i].usability
+            i += 1
+        programPower = programmLength * math.log2(programmDictionary)
         createTable(list1, list2)
 
 
