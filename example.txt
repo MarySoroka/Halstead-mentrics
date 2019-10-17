@@ -1,0 +1,221 @@
+import net.zomis.duga.chat.listen.ChatMessageIncoming
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.util.function.Consumer
+
+// creating of the chat
+class ChatCommands {
+    //defile fields of the class
+    private static final Logger logger = LoggerFactory.getLogger(ChatCommands.class)
+
+    private final List<Consumer<ChatMessageIncoming>> consumers = new ArrayList<>()
+    private final DugaTasks tasks
+    private final DugaBotService bot
+
+    //methods with chat commands
+    ChatCommands(DugaChatListener bean) {
+        this.tasks = bean.tasks
+        this.bot = bean.chatBot
+        consumers << {ChatMessageIncoming event ->
+            if (event.content.contains('add stats')) {
+                DailyInfo.withNewSession { status ->
+                    def info = new DailyInfo()
+                    info.comment = 'Created on command'
+                    info.name = 'ABC' + Math.random()
+                    info.url = 'http://www.example.com'
+                    if (!info.save(failOnError: true, flush: true)) {
+                        event.reply('Failed')
+                        info.errors.each {
+                            logger.error(it)
+                        }
+                    } else {
+                        event.reply('OK')
+                    }
+                }
+            }
+        }
+        consumers << {ChatMessageIncoming event ->
+            if (event.content.contains('add config')) {
+                DailyInfo.withNewSession { status ->
+                    def config = new DugaConfig()
+                    config.key = 'ABC' + Math.random()
+                    config.value = 'Created on command'
+                    if (!config.save(failOnError: true, flush: true)) {
+                        event.reply('Failed')
+                        config.errors.each {
+                            logger.error(it)
+                        }
+                    } else {
+                        event.reply('OK')
+                    }
+                }
+            }
+        }
+        //fuction for customer
+        consumers << {ChatMessageIncoming event ->
+            if (event.content.contains('add follow')) {
+                Followed.withNewSession { status ->
+                    def info = new Followed()
+                    info.lastEventId = 0
+                    info.name = 'ABC' + Math.random()
+                    info.interestingEvents = '*'
+                    info.lastChecked = 0
+                    info.followType = 1
+                    info.roomIds = '20298'
+                    if (!info.save(failOnError: true, flush: true)) {
+                        event.reply('Failed')
+                        info.errors.each {
+                            logger.error(it)
+                        }
+                    } else {
+                        event.reply('OK')
+                    }
+                }
+            }
+        }
+        consumers << {ChatMessageIncoming message ->
+            def command = 'task do'
+            int index = message.content.indexOf(command)
+            if (index != -1) {
+                String str = message.content.substring(index + command.length() + 1)
+                tasks.createTask(str).run()
+                message.reply('OK')
+            }
+        }
+        consumers << {ChatMessageIncoming event ->
+            if (event.content.contains('create task')) {
+                TaskData.withNewSession { status ->
+                    logger.info('Transaction ' + status)
+                    def task = new TaskData()
+                    task.taskValue = 'no task defined'
+                    task.cronStr = '0 0 * * * *'
+                    if (!task.save(failOnError: true, flush: true)) {
+                        event.reply('Failed')
+                        task.errors.each {
+                            logger.error(it)
+                        }
+                    } else {
+                        event.reply('OK')
+                    }
+                    logger.info('Posted OK')
+                }
+                logger.info('Done')
+            }
+            println quickSort(randomList)
+        }
+    }
+
+    def botCommand(ChatMessageIncoming messageEvent) {
+        for (Consumer consumer : consumers) {
+            consumer.accept(messageEvent)
+        }
+           def array = createRandomArray(10)
+
+           println "start : ${array}"
+           def bk = array.clone()
+           def afterArray = bubbleSort(array)
+           println "end : ${afterArray}"
+           assert bk.sort() == afterArray
+    }
+    //create random array
+    def createRandomArray = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+    def bubbleSort = {array ->
+      (array.size()-1).times {
+        ((array.size()-1)-it).times {
+          array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+        }
+      }
+      array
+    }
+    def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+    def randomList = createRandomList(10)
+    println randomList
+
+    def quickSort = {list ->
+      if (list.every{list[0] == it}) {
+         println sleepSort(randomList)
+        return list
+      }
+      def pivot = list.pop()
+      def small = list.findAll{it < pivot}
+      def big = list.findAll{it >= pivot}
+
+      call(small) + pivot + call(big)
+    }
+    def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+    def randomList = createRandomList(10)
+    println randomList
+
+    def selectionSort = {l, result=[] ->
+      def min = l.min()
+      result += l.findAll{min == it}
+      l -= min
+      l ? call(l, result) : result
+    }
+    println selectionSort(randomList)
+
+    def createRandomList = {size ->
+  (0..<size).collect {
+    (Math.floor(Math.random() * 10) + 1) as int
+  }
+
+    def randomList = createRandomList(10)
+    println randomList
+
+    def sleepSort = {list ->
+      def result = [] as CopyOnWriteArrayList
+      GParsPool.withPool(list.size()) {pool ->
+        list.eachParallel {
+          sleep(it * 10)
+          result << it
+        }
+      }
+      result
+    }
+    def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+    def randomList = createRandomList(10)
+    println "start : ${randomList}"
+
+    // create merge
+    def listMerge = {list1, list2, mergeList=[] ->
+        if (!list1 || !list2) {
+          return list1 + list2 + mergeList
+        }
+        def bigValue = (list1.last() < list2.last() ? list2 : list1).pop()
+        mergeList.add(0,bigValue)
+        call(list1, list2, mergeList)
+        println "end   : ${mergeSort(randomList)}"
+    }
+
+    def mergeSort = {
+      if (it.size() == 1) {
+        return it
+      }
+      def i = it.size().intdiv(2)
+      def left = call(it[0..i-1])
+      def right = call(it[i..it.size()-1])
+      listMerge(left, right)
+    }
+
+
+}
