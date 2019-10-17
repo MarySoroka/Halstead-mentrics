@@ -1,6 +1,7 @@
 import tkinter
 import sourses
 import ourclass
+import math
 from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
@@ -35,21 +36,17 @@ def delitingOfStrings(redString):
 
 #создание листа с операторами и их подсчётом
 def editingOperatorsList(listOfOperators):
-    listOfOperators.sort
     i = 0
-    while i < len(listOfOperators)-1:
-        count = 0
-        j=i+1
+    while i < len(listOfOperators):
+        j = 0
         while j < len(listOfOperators):
-            if listOfOperators[i] == listOfOperators[j]:
-                count += 1
-                j += 1
-            else:
-                break
-        operatorss= ourclass.RecordOperators(listOfOperators[j - 1], count)
-        i=j
-    return operatorss
-
+            if listOfOperators[i].name == listOfOperators[j].name and j != i:
+                listOfOperators[i].amount = listOfOperators[i].amount + listOfOperators[j].amount
+                del listOfOperators[j]
+            j += 1
+            i += 1
+        return listOfOperators
+    return listOfOperators
 
 
 #delete oop words
@@ -80,6 +77,20 @@ def showTable():
     else:
         list1, list2 = readFromTextbox()
         list2 = deleteRepeatObj(list2)
+
+
+        # считаю метрики
+        programmDictionary = len(list1)+len(list2)
+        programmLength = 0
+        i=0
+        while i<len(list1):
+            programmLength += list1[i].amount
+            i += 1
+        i = 0
+        while i < len(list2):
+            programmLength += list2[i].initialization + list2[i].usability
+            i += 1
+        programPower = programmLength * math.log2(programmDictionary)
         createTable(list1)
 
 
@@ -91,8 +102,8 @@ def readFromTextbox():
         lineWithDot = delitingOfOOP(line.split())
         operators, operands = findingOperators(findDot(lineWithDot))
         resultListOfOperators.extend(operators)
-        resultOfOperands.extend(operands)
-    return resultListOfOperators, resultOfOperands
+        finalListOfOperators = editingOperatorsList(resultListOfOperators)
+    return finalListOfOperators, resultOfOperands
 
 
 
