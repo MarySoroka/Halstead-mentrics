@@ -1,8 +1,15 @@
 import sourses
-from ourclass import Record
+from ourclass import Record, FunctionRecord
 from ourclass import RecordOperators
 
 
+
+def editFunc(func):
+    name = func[0]
+    del func[0]
+    operators, operands = findingOperators(findDot(func))
+    defFunc = FunctionRecord(name,operators,operands)
+    return defFunc
 #cretion of object list
 def countingOperators(word):
     operators = RecordOperators(word, 1)
@@ -101,7 +108,7 @@ def findBrackets(word):
         i = 1
         while i <= len(sourses.operators_bracket):
             if k+1 < len(word) and word[k+1] != '=' and word[k] == sourses.operators_bracket[i] or k == len(word)-1 and word[k] == sourses.operators_bracket[i]:
-                if k > 0 and word[k] != '=' and word[k-1] != sourses.operators_bracket[i-1]:
+                if k > 0 and word[k] != '=':
                     if k != 0:
                         word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
                     else:

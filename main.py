@@ -5,7 +5,8 @@ from tkinter import *
 from tkinter import scrolledtext, filedialog, messagebox
 
 from createTable import createTable
-from workWithOperators import findingOperators, findDot, deleteRepeatObj
+from ourclass import RecordOperators
+from workWithOperators import findingOperators, findDot, deleteRepeatObj, editFunc
 
 
 def delitingMultiComments(redString):
@@ -26,6 +27,7 @@ def delitingMultigovno(redString):
         else:
             i += 1
     return 0
+
 
 
 #удаляю строки с импортами и пэкеджами
@@ -124,15 +126,29 @@ def setChoose():
         chooseInputType.select()
         openFileBtn.pack()
 
+def editFuncList (operators,operands, func):
+    i = 0
+    while i < len(func):
+        j = 0
+        while j < len(operands):
+            if operands[j].name == func[i].name:
+                funcOpr = RecordOperators(func[i].name,1)
+                operators.append(funcOpr)
+                operators.extend(func[i].operators)
+                operands.extend(func[i].operands)
+            j += 1
+        i += 1
+    return operands, operators
+
 
 # show result table
 def showTable():
     if inputText.get('0.1') == '\n':
         messagebox.showerror('Error', 'Please, choose your file or inter your text')
     else:
-        list1, list2 = readFromTextbox()
+        list1, list2, list3 = readFromTextbox()
         list2 = deleteRepeatObj(list2)
-
+        list1, list2 = editFuncList(list1, list2, list3)
         # считаю метрики
         programmDictionary = len(list1) + len(list2)
         programmLength = 0
@@ -149,27 +165,55 @@ def showTable():
         createTable(list1, list2, str(int(programPower)))
 
 
+def convert(list):
+    # Converting integer list to string list
+    i = 0
+    res =''
+    while i <len(list):
+        res = res + ' '+ list[i]
+        i += 1
+    return (res)
+
 def readFromTextbox():
-    num =0
     resultListOfOperators = []
     resultOfOperands = []
+    funcList = []
     text = inputText.get('1.0', END).splitlines()
-    for line in text:
-        if num == 0:
-            num = delitingMultigovno(line.split())
-            delStringLine = delitingOfStrings(line)
-            anotherDel = delitingMultiComments(delStringLine.split())
-            if anotherDel != " ":
-                lineWithoutImport = delitingOfImport(anotherDel)
-                if lineWithoutImport != " ":
-                    lineWithDot = delitingOfOOP(lineWithoutImport)
-                    operators, operands = findingOperators(findDot(lineWithDot))
-                    resultListOfOperators.extend(operators)
-                    resultOfOperands.extend(operands)
-        else:
-            num = 0
+    i = 0
+    while i < len(text):
+            line = text[i].split()
+            str = text[i]
+            if line[0] == 'def':
+                ind1 = ind2 = 0
+                funcStr =''
+                while ind1 != ind2 or ind1 == ind2 == 0:
+                    j =0
+                    line = text[i].split()
+                    while j< len(line):
+                        if line[j] == '{':
+                            ind1 += 1
+                        elif line[j] == '}':
+                            ind2 += 1
+                        j += 1
+                    delStringLine = delitingOfStrings(text[i])
+                    anotherDel = delitingMultiComments(delStringLine.split())
+                    lineWithDot = convert(delitingOfOOP(anotherDel))
+                    funcStr = funcStr + ' ' + lineWithDot
+                    i += 1
+                funcList.append(editFunc(funcStr.split()))
+            else:
+                delStringLine = delitingOfStrings(str)
+                anotherDel = delitingMultiComments(delStringLine.split())
+                if anotherDel != " ":
+                    lineWithoutImport = delitingOfImport(anotherDel)
+                    if lineWithoutImport != " ":
+                        lineWithDot = delitingOfOOP(lineWithoutImport)
+                        operators, operands = findingOperators(findDot(lineWithDot))
+                        resultListOfOperators.extend(operators)
+                        resultOfOperands.extend(operands)
+                i += 1
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
-    return finalOperatorsList, resultOfOperands
+    return finalOperatorsList, resultOfOperands,funcList
 
 
 
