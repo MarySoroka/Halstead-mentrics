@@ -18,6 +18,15 @@ def delitingMultiComments(redString):
             i += 1
     return redString
 
+def delitingMultigovno(redString):
+    i = 0
+    while i < len(redString):
+        if redString[i] == "/*":
+            return 1
+        else:
+            i += 1
+    return 0
+
 
 #удаляю строки с импортами и пэкеджами
 def delitingOfImport(redString):
@@ -27,6 +36,23 @@ def delitingOfImport(redString):
             returnString = ' '
             return returnString
         i += 1
+    return redString
+
+
+def returningOfnames(redString):
+    i=0
+    newLine = " "
+    while i<len(redString):
+        if redString[i]=="$" and len(redString[i+1])<=len(redString) and redString[i+1]=="{":
+            end = redString.find("}")
+            j = i
+            while j<=end:
+                newLine += redString[j]
+                j += 1
+            return newLine
+        else:
+            i +=1
+    redString = " "
     return redString
 
 
@@ -45,6 +71,14 @@ def delitingOfStrings(redString):
         while i < len(redString):
             newLine += redString[i]
             i += 1
+
+        smLine = " "
+        i = start+ 1
+        while i < ending:
+            smLine += redString[i]
+            i+=1
+        workString = returningOfnames(redString)
+        newLine = newLine + " " + workString
     else:
         newLine = redString
     return newLine
@@ -116,20 +150,24 @@ def showTable():
 
 
 def readFromTextbox():
+    num =0
     resultListOfOperators = []
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        delStringLine = delitingOfStrings(line)
-        anotherDel = delitingMultiComments(delStringLine.split())
-        if anotherDel != " ":
-            lineWithoutImport = delitingOfImport(anotherDel)
-            if lineWithoutImport != " ":
-                lineWithDot = delitingOfOOP(lineWithoutImport)
-                operators, operands = findingOperators(findDot(lineWithDot))
-                resultListOfOperators.extend(operators)
-                resultOfOperands.extend(operands)
-
+        if num == 0:
+            num = delitingMultigovno(line.split())
+            delStringLine = delitingOfStrings(line)
+            anotherDel = delitingMultiComments(delStringLine.split())
+            if anotherDel != " ":
+                lineWithoutImport = delitingOfImport(anotherDel)
+                if lineWithoutImport != " ":
+                    lineWithDot = delitingOfOOP(lineWithoutImport)
+                    operators, operands = findingOperators(findDot(lineWithDot))
+                    resultListOfOperators.extend(operators)
+                    resultOfOperands.extend(operands)
+        else:
+            num = 0
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
     return finalOperatorsList, resultOfOperands
 
