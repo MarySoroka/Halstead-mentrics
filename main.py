@@ -10,19 +10,28 @@ from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
 def delitingMultiComments(redString):
     i = 0
-    while i < len(redString):
-        if redString[i] == "/**" or redString[i] == "*" or redString[i] == "*/" or redString[i] == "/*":
+    while i<len(redString):
+        if redString[i] == "/**" or redString[i] == "*" or redString[i] == "*/" or redString[i] == "/*" :
             retStr = " "
             return retStr
         else:
             i += 1
     return redString
 
-
-# удаляю строки с импортами и пэкеджами
-def delitingOfImport(redString):
+def delitingMultigovno(redString):
     i = 0
     while i < len(redString):
+        if redString[i] == "/*":
+            return 1
+        else:
+            i += 1
+    return 0
+
+
+#удаляю строки с импортами и пэкеджами
+def delitingOfImport(redString):
+    i=0
+    while i<len(redString):
         if redString[i] == "import" or redString[i] == "package" or redString[i] == "//":
             returnString = ' '
             return returnString
@@ -30,7 +39,24 @@ def delitingOfImport(redString):
     return redString
 
 
-# удаляю всякие распечатки строк
+def returningOfnames(redString):
+    i=0
+    newLine = " "
+    while i<len(redString):
+        if redString[i]=="$" and len(redString[i+1])<=len(redString) and redString[i+1]=="{":
+            end = redString.find("}")
+            j = i
+            while j<=end:
+                newLine += redString[j]
+                j += 1
+            return newLine
+        else:
+            i +=1
+    redString = " "
+    return redString
+
+
+#удаляю всякие распечатки строк
 def delitingOfStrings(redString):
     finding = '"'
     newLine = " "
@@ -45,18 +71,25 @@ def delitingOfStrings(redString):
         while i < len(redString):
             newLine += redString[i]
             i += 1
+
+        smLine = " "
+        i = start+ 1
+        while i < ending:
+            smLine += redString[i]
+            i+=1
+        workString = returningOfnames(redString)
+        newLine = newLine + " " + workString
     else:
         newLine = redString
     return newLine
 
-
-# создание листа с операторами и их подсчётом
+#создание листа с операторами и их подсчётом
 def editingOperatorsList(listOfOperators):
     i = 0
     h = 0
     length = len(listOfOperators)
     while i < length:
-        j = i + 1
+        j = i+1
         while j < length:
             if listOfOperators[i].name == listOfOperators[j].name:
                 listOfOperators[i].amount = listOfOperators[i].amount + listOfOperators[j].amount
@@ -66,54 +99,11 @@ def editingOperatorsList(listOfOperators):
             else:
                 j += 1
         i += 1
-    i = 0
-    while i < len(listOfOperators):
-        if listOfOperators[i].name == 'if':
-            j = 0
-            while j < len(listOfOperators):
-                if listOfOperators[j].name == 'else':
-                    if listOfOperators[i].amount > listOfOperators[j].amount:
-                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
-                    else:
-                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        del listOfOperators[j]
-                    break
-                else:
-                    j += 1
-        elif listOfOperators[i].name == 'try':
-            j = 0
-            while j < len(listOfOperators):
-                if listOfOperators[j].name == 'catch':
-                    if listOfOperators[i].amount > listOfOperators[j].amount:
-                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
-                    else:
-                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        del listOfOperators[j]
-                    j = 0
-                    while j < len(listOfOperators):
-                        if listOfOperators[j].name == 'finally':
-                            if listOfOperators[i].amount > listOfOperators[j].amount:
-                                listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                                listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
-                            else:
-                                listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                                del listOfOperators[j]
-                elif listOfOperators[j].name == 'finally':
-                    if listOfOperators[i].amount > listOfOperators[j].amount:
-                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
-                    else:
-                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
-                        del listOfOperators[j]
-                else:
-                    j += 1
-        i += 1
     return listOfOperators
 
 
-# delete oop words
+
+#delete oop words
 def delitingOfOOP(redString):
     i = 0
     while i < len(redString):
@@ -160,22 +150,27 @@ def showTable():
 
 
 def readFromTextbox():
+    num =0
     resultListOfOperators = []
     resultOfOperands = []
     text = inputText.get('1.0', END).splitlines()
     for line in text:
-        delStringLine = delitingOfStrings(line)
-        anotherDel = delitingMultiComments(delStringLine.split())
-        if anotherDel != " ":
-            lineWithoutImport = delitingOfImport(anotherDel)
-            if lineWithoutImport != " ":
-                lineWithDot = delitingOfOOP(lineWithoutImport)
-                operators, operands = findingOperators(findDot(lineWithDot))
-                resultListOfOperators.extend(operators)
-                resultOfOperands.extend(operands)
-
+        if num == 0:
+            num = delitingMultigovno(line.split())
+            delStringLine = delitingOfStrings(line)
+            anotherDel = delitingMultiComments(delStringLine.split())
+            if anotherDel != " ":
+                lineWithoutImport = delitingOfImport(anotherDel)
+                if lineWithoutImport != " ":
+                    lineWithDot = delitingOfOOP(lineWithoutImport)
+                    operators, operands = findingOperators(findDot(lineWithDot))
+                    resultListOfOperators.extend(operators)
+                    resultOfOperands.extend(operands)
+        else:
+            num = 0
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
     return finalOperatorsList, resultOfOperands
+
 
 
 # open dialog to find file and after that define variable fileName as path of the file
@@ -188,6 +183,7 @@ def openFile():
         f = open(name, 'r')
         numOfLine = 0
         for line in f:
+
             inputText.insert(END, line)
             numOfLine = numOfLine + 1
     except (OSError, IOError) as e:

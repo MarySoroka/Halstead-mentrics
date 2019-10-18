@@ -104,12 +104,26 @@ word_operators_of_language = {
     "in": 5,
     "instanceof": 6,
     "as": 7,
-    "it":8,
-    "else":9,
-    "if":10,
-    "try":11,
-    "catch":12,
-    "finally":13
+    "it": 8,
+    "catch": 9,
+    "break": 10,
+    "case": 11,
+    "const": 12,
+    "continue": 13,
+    "goto": 14,
+    "if": 15,
+    "else": 16,
+    "false": 17,
+    "true": 18,
+    "return": 19,
+    "do": 20,
+    "try": 21,
+    "null": 22,
+    "default": 23,
+    "switch": 24,
+    "catch": 25,
+    "finally": 26
+
 }
 methods_of_language = {
     "plus": 1,
@@ -164,6 +178,11 @@ oop_delete = {
     "double[]": 18,
     "float[]": 19,
     "Collections": 20,
-    "assert": 21
+    "assert": 21,
+    "def": 22,
+    "this": 23,
+    "new": 24,
+    "trait": 25,
+    "implements": 26
 
 }
