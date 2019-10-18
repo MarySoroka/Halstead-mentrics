@@ -10,8 +10,8 @@ from workWithOperators import findingOperators, findDot, deleteRepeatObj
 
 def delitingMultiComments(redString):
     i = 0
-    while i<len(redString):
-        if redString[i] == "/**" or redString[i] == "*" or redString[i] == "*/" or redString[i] == "/*" :
+    while i < len(redString):
+        if redString[i] == "/**" or redString[i] == "*" or redString[i] == "*/" or redString[i] == "/*":
             retStr = " "
             return retStr
         else:
@@ -19,10 +19,10 @@ def delitingMultiComments(redString):
     return redString
 
 
-#удаляю строки с импортами и пэкеджами
+# удаляю строки с импортами и пэкеджами
 def delitingOfImport(redString):
-    i=0
-    while i<len(redString):
+    i = 0
+    while i < len(redString):
         if redString[i] == "import" or redString[i] == "package" or redString[i] == "//":
             returnString = ' '
             return returnString
@@ -30,7 +30,7 @@ def delitingOfImport(redString):
     return redString
 
 
-#удаляю всякие распечатки строк
+# удаляю всякие распечатки строк
 def delitingOfStrings(redString):
     finding = '"'
     newLine = " "
@@ -49,13 +49,14 @@ def delitingOfStrings(redString):
         newLine = redString
     return newLine
 
-#создание листа с операторами и их подсчётом
+
+# создание листа с операторами и их подсчётом
 def editingOperatorsList(listOfOperators):
     i = 0
     h = 0
     length = len(listOfOperators)
     while i < length:
-        j = i+1
+        j = i + 1
         while j < length:
             if listOfOperators[i].name == listOfOperators[j].name:
                 listOfOperators[i].amount = listOfOperators[i].amount + listOfOperators[j].amount
@@ -65,11 +66,54 @@ def editingOperatorsList(listOfOperators):
             else:
                 j += 1
         i += 1
+    i = 0
+    while i < len(listOfOperators):
+        if listOfOperators[i].name == 'if':
+            j = 0
+            while j < len(listOfOperators):
+                if listOfOperators[j].name == 'else':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                    break
+                else:
+                    j += 1
+        elif listOfOperators[i].name == 'try':
+            j = 0
+            while j < len(listOfOperators):
+                if listOfOperators[j].name == 'catch':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                    j = 0
+                    while j < len(listOfOperators):
+                        if listOfOperators[j].name == 'finally':
+                            if listOfOperators[i].amount > listOfOperators[j].amount:
+                                listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                                listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                            else:
+                                listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                                del listOfOperators[j]
+                elif listOfOperators[j].name == 'finally':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                else:
+                    j += 1
+        i += 1
     return listOfOperators
 
 
-
-#delete oop words
+# delete oop words
 def delitingOfOOP(redString):
     i = 0
     while i < len(redString):
@@ -134,7 +178,6 @@ def readFromTextbox():
     return finalOperatorsList, resultOfOperands
 
 
-
 # open dialog to find file and after that define variable fileName as path of the file
 # read from file by lines and write into text area in the main form
 def openFile():
@@ -145,7 +188,6 @@ def openFile():
         f = open(name, 'r')
         numOfLine = 0
         for line in f:
-
             inputText.insert(END, line)
             numOfLine = numOfLine + 1
     except (OSError, IOError) as e:

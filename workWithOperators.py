@@ -100,12 +100,19 @@ def findBrackets(word):
     while k < len(word) and k + 1 != " ":
         i = 1
         while i <= len(sourses.operators_bracket):
-            if k+1 < len(word) and word[k+1] != '='and word[k] == sourses.operators_bracket[i] or k == len(word)-1 and word[k] == sourses.operators_bracket[i]:
-                if k != 0:
-                    word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
+            if k+1 < len(word) and word[k+1] != '=' and word[k] == sourses.operators_bracket[i] or k == len(word)-1 and word[k] == sourses.operators_bracket[i]:
+                if k > 0 and word[k] != '=' and word[k-1] != sourses.operators_bracket[i-1]:
+                    if k != 0:
+                        word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
+                    else:
+                        word = word[k] + " " + word[1: len(word)]
+                    k += 2
                 else:
-                    word = word[k] + " " + word[1: len(word)]
-                k += 2
+                    if k != 0:
+                        word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
+                    else:
+                        word = word[k] + " " + word[1: len(word)]
+                    k += 2
             i += 1
         k += 1
     return word.split()

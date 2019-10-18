@@ -104,7 +104,12 @@ word_operators_of_language = {
     "in": 5,
     "instanceof": 6,
     "as": 7,
-    "it":8
+    "it":8,
+    "else":9,
+    "if":10,
+    "try":11,
+    "catch":12,
+    "finally":13
 }
 methods_of_language = {
     "plus": 1,
@@ -159,7 +164,6 @@ oop_delete = {
     "double[]": 18,
     "float[]": 19,
     "Collections": 20,
-    "assert": 21,
-    "def": 22
+    "assert": 21
 
 }
