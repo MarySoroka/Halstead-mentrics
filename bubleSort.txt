@@ -1,9 +1,24 @@
 ﻿// конструктор по умолчанию добавляется автоматически
+package kz.blindmouse.algo.sorting
+import net.zomis.duga.chat.listen.ChatMessageIncoming
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import java.util.function.Consumer
+
 import java.nio.file.Paths
+
+int time = 4
+p = time
+
+// create random array
 def createRandomArray = { size ->
   (0..<size).collect {
     (Math.floor(Math.random() * 10) + 1) as int
   }
+}
+
+for( int i = 0; i<5 ;i++) {
+	println(i);
 }
 
 def bubbleSort = { array ->
@@ -15,10 +30,72 @@ def bubbleSort = { array ->
   array
 }
 println("1. Enviar arquivo ao Cliente.\n")
-def array = createRandomArray(10)
+println("2. Receber arquivo do Cliente.\n")
+println("0. Sair")
+array = createRandomArray(10)
 
 println "start : ${array}"
-def bk = array.clone()
-def afterArray = bubbleSort(array)
+bk = array.clone()
+afterArray = bubbleSort(array)
 println "end : ${afterArray}"
 assert bk.sort() == afterArray
+
+def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+randomList = createRandomList(10)
+    println randomList
+
+randomList = createRandomList(15)
+    println "start : ${randomList}"
+
+// fuction for customer
+def mergeSort = {
+      if (it.size() == 1) 
+        return it
+      }
+	return it + 1
+}
+
+
+def sleepSort = {list ->
+      result = [] as CopyOnWriteArrayList
+      GParsPool.withPool(list.size()) {pool ->
+        list.eachParallel {
+          sleep(it * 10)
+          result << it
+        }
+      }
+      result
+    }
+
+
+
+n = array.mergeSort
+println "end   : ${mergeSort(randomList)}"
+
+for( int i in array ) {
+	println(i);
+	if (i == 2)
+	break;
+}
+
+int count = 0
+while ( count<7){
+	println(count);
+	count++
+}
+
+int a = 100
+if (a<10){
+	println("The value is true")
+}
+else{
+	println("The value is false")
+}
+
+newArr = array.mergeSort
+println "end   : ${mergeSort(randomList)}"

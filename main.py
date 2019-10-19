@@ -187,36 +187,40 @@ def readFromTextbox():
     text = inputText.get('1.0', END).splitlines()
     i = 0
     while i < len(text):
-        line = text[i].split()
-        str = text[i]
-        if line[0] == 'def':
-            ind1 = ind2 = 0
-            funcStr = ''
-            while ind1 != ind2 or ind1 == ind2 == 0:
-                j = 0
-                line = text[i].split()
-                while j < len(line):
-                    if line[j] == '{':
-                        ind1 += 1
-                    elif line[j] == '}':
-                        ind2 += 1
-                    j += 1
-                delStringLine = delitingOfStrings(text[i])
+        line = text[i]
+        if line != '':
+            line = text[i].split()
+            str = text[i]
+            if line[0] == 'def':
+                ind1 = ind2 = 0
+                funcStr = ''
+                while ind1 != ind2 or ind1 == ind2 == 0:
+                    j = 0
+                    line = text[i].split()
+                    while j < len(line):
+                        if line[j] == '{':
+                            ind1 += 1
+                        elif line[j] == '}':
+                            ind2 += 1
+                        j += 1
+                    delStringLine = delitingOfStrings(text[i])
+                    anotherDel = delitingMultiComments(delStringLine.split())
+                    lineWithDot = convert(delitingOfOOP(anotherDel))
+                    funcStr = funcStr + ' ' + lineWithDot
+                    i += 1
+                funcList.append(editFunc(funcStr.split()))
+            else:
+                delStringLine = delitingOfStrings(str)
                 anotherDel = delitingMultiComments(delStringLine.split())
-                lineWithDot = convert(delitingOfOOP(anotherDel))
-                funcStr = funcStr + ' ' + lineWithDot
+                if anotherDel != " ":
+                    lineWithoutImport = delitingOfImport(anotherDel)
+                    if lineWithoutImport != " ":
+                        lineWithDot = delitingOfOOP(lineWithoutImport)
+                        operators, operands = findingOperators(findDot(lineWithDot))
+                        resultListOfOperators.extend(operators)
+                        resultOfOperands.extend(operands)
                 i += 1
-            funcList.append(editFunc(funcStr.split()))
         else:
-            delStringLine = delitingOfStrings(str)
-            anotherDel = delitingMultiComments(delStringLine.split())
-            if anotherDel != " ":
-                lineWithoutImport = delitingOfImport(anotherDel)
-                if lineWithoutImport != " ":
-                    lineWithDot = delitingOfOOP(lineWithoutImport)
-                    operators, operands = findingOperators(findDot(lineWithDot))
-                    resultListOfOperators.extend(operators)
-                    resultOfOperands.extend(operands)
             i += 1
     finalOperatorsList = editingOperatorsList(resultListOfOperators)
     return finalOperatorsList, resultOfOperands, funcList
