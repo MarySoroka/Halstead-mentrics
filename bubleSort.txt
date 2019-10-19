@@ -4,12 +4,57 @@ import net.zomis.duga.chat.listen.ChatMessageIncoming
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.util.function.Consumer
-
 import java.nio.file.Paths
 
-int time = 4
-p = time
+class App{
 
+static void main(String[] args){
+    int time = 4
+    p = time
+    for( int i = 0; i<5 ;i++) {
+        println(i);
+    }
+    println("1. Enviar arquivo ao Cliente.\n")
+    println("2. Receber arquivo do Cliente.\n")
+    println("0. Sair")
+    array = createRandomArray(10)
+    println "start : ${array}"
+    bk = array.clone()
+    afterArray = bubbleSort(array)
+    println "end : ${afterArray}"
+    assert bk.sort() == afterArray
+    randomList = createRandomList(10)
+        println randomList
+
+    randomList = createRandomList(15)
+        println "start : ${randomList}"
+
+        n = array.mergeSort
+    println "end   : ${mergeSort(randomList)}"
+    for( int i in array ) {
+        println(i);
+        if (i == 2)
+        break;
+    }
+
+    int count = 0
+    while ( count<7){
+        println(count);
+        count++
+    }
+
+    int a = 100
+    if (a<10){
+        println("The value is true")
+    }
+    else{
+        println("The value is false")
+    }
+
+    newArr = array.mergeSort
+    println "end   : ${mergeSort(randomList)}"
+
+}
 // create random array
 def createRandomArray = { size ->
   (0..<size).collect {
@@ -17,9 +62,7 @@ def createRandomArray = { size ->
   }
 }
 
-for( int i = 0; i<5 ;i++) {
-	println(i);
-}
+
 
 def bubbleSort = { array ->
   (array.size()-1).times {
@@ -29,16 +72,8 @@ def bubbleSort = { array ->
   }
   array
 }
-println("1. Enviar arquivo ao Cliente.\n")
-println("2. Receber arquivo do Cliente.\n")
-println("0. Sair")
-array = createRandomArray(10)
 
-println "start : ${array}"
-bk = array.clone()
-afterArray = bubbleSort(array)
-println "end : ${afterArray}"
-assert bk.sort() == afterArray
+
 
 def createRandomList = {size ->
       (0..<size).collect {
@@ -46,11 +81,7 @@ def createRandomList = {size ->
       }
     }
 
-randomList = createRandomList(10)
-    println randomList
 
-randomList = createRandomList(15)
-    println "start : ${randomList}"
 
 // fuction for customer
 def mergeSort = {
@@ -72,30 +103,121 @@ def sleepSort = {list ->
       result
     }
 
-
-
-n = array.mergeSort
-println "end   : ${mergeSort(randomList)}"
-
-for( int i in array ) {
-	println(i);
-	if (i == 2)
-	break;
+def bubbleSort = { array ->
+  (array.size()-1).times {
+    ((array.size()-1)-it).times {
+      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+    }
+  }
+  array
 }
 
-int count = 0
-while ( count<7){
-	println(count);
-	count++
+
+
+def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+
+
+// fuction for customer
+def mergeSort = {
+      if (it.size() == 1)
+        return it
+      }
+	return it + 1
 }
 
-int a = 100
-if (a<10){
-	println("The value is true")
-}
-else{
-	println("The value is false")
+
+def sleepSort = {list ->
+      result = [] as CopyOnWriteArrayList
+      GParsPool.withPool(list.size()) {pool ->
+        list.eachParallel {
+          sleep(it * 10)
+          result << it
+        }
+      }
+      result
+    }
+def bubbleSort = { array ->
+  (array.size()-1).times {
+    ((array.size()-1)-it).times {
+      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+    }
+  }
+  array
 }
 
-newArr = array.mergeSort
-println "end   : ${mergeSort(randomList)}"
+
+
+def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+
+
+// fuction for customer
+def mergeSort = {
+      if (it.size() == 1)
+        return it
+      }
+	return it + 1
+}
+
+
+def sleepSort = {list ->
+      result = [] as CopyOnWriteArrayList
+      GParsPool.withPool(list.size()) {pool ->
+        list.eachParallel {
+          sleep(it * 10)
+          result << it
+        }
+      }
+      result
+    }
+def bubbleSort = { array ->
+  (array.size()-1).times {
+    ((array.size()-1)-it).times {
+      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+    }
+  }
+  array
+}
+
+
+
+def createRandomList = {size ->
+      (0..<size).collect {
+        (Math.floor(Math.random() * 10) + 1) as int
+      }
+    }
+
+
+
+// fuction for customer
+def mergeSort = {
+      if (it.size() == 1)
+        return it
+      }
+	return it + 1
+}
+
+
+def sleepSort = {list ->
+      result = [] as CopyOnWriteArrayList
+      GParsPool.withPool(list.size()) {pool ->
+        list.eachParallel {
+          sleep(it * 10)
+          result << it
+        }
+      }
+      result
+    }
+
+
+
+

@@ -34,7 +34,7 @@ def delitingMultigovno(redString):
 def delitingOfImport(redString):
     i = 0
     while i < len(redString):
-        if redString[i] == "import" or redString[i] == "package" or redString[i] == "//":
+        if redString[i] == "import" or redString[i] == "package" or redString[i] == "//" or redString[i] == "class" or redString[i] == "static":
             returnString = ' '
             return returnString
         i += 1
@@ -236,6 +236,9 @@ def openFile():
         f = open(name, 'r')
         numOfLine = 0
         for line in f:
+            if numOfLine == 0:
+                line = line[1:]
+                line = line[:0] + ' ' + line[2:]
             inputText.insert(END, line)
             numOfLine = numOfLine + 1
     except (OSError, IOError) as e:
