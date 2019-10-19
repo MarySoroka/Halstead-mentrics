@@ -111,24 +111,37 @@ def findDot(line):
 # finding simbols in words which is in operators_bracket vocabulary and addition space before and after them
 def findBrackets(word):
     k = 0
-    while k < len(word) and k + 1 != " ":
-        i = 1
-        while i <= len(sourses.operators_bracket):
-            j = 0
-            if k + 1 < len(word) and word[k + 1] != '=' and word[k] == sourses.operators_bracket[i] or k == len(
-                    word) - 1 and word[k] == sourses.operators_bracket[i]:
-                if k > 0 and word[k] != '=':
+    while k< len(word):
+        if k+1 < len(word):
+            str = word[k] + word[k+1]
+            if sourses.operators_of_language_multi.get(str,0) != 0:
+                word = word[0:k] + " " + str + " " + word[k + 2: len(word)]
+                k += 2
+            else:
+                    if sourses.operators_bracket.get(word[k],0) != 0 and word[k+1] != ' ':
+                        if k >=0 :
+                            if k != 0:
+                                word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
+                            else:
+                                word = word[k] + " " + word[1: len(word)]
+                        else:
+                            if k != 0:
+                                word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
+                            else:
+                                word = word[k] + " " + word[1: len(word)]
+
+        else:
+            if sourses.operators_bracket.get(word[k], 0) != 0:
+                if k >= 0:
                     if k != 0:
                         word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
                     else:
                         word = word[k] + " " + word[1: len(word)]
-                    k += 2
                 else:
                     if k != 0:
                         word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
                     else:
                         word = word[k] + " " + word[1: len(word)]
-                    k += 2
-            i += 1
+
         k += 1
     return word.split()
