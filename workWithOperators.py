@@ -3,29 +3,30 @@ from ourclass import Record, FunctionRecord
 from ourclass import RecordOperators
 
 
-
 def editFunc(func):
     name = func[0]
     del func[0]
     operators, operands = findingOperators(findDot(func))
-    defFunc = FunctionRecord(name,operators,operands)
+    defFunc = FunctionRecord(name, operators, operands)
     return defFunc
-#cretion of object list
+
+
+# cretion of object list
 def countingOperators(word):
     operators = RecordOperators(word, 1)
     return operators
 
 
-#cretion of object list
+# cretion of object list
 def countingOperands(words, i):
     operand = Record(words[i], 0, 0)
     if i + 1 < len(words) and words[i + 1] == '=':
         operand.initialization += 1
     elif i < len(words) and words[i - 1] == '=':
         operand.usability += 1
-    elif i < len(words) and words[i-1] == ".":
+    elif i < len(words) and words[i - 1] == ".":
         operand.usability += 1
-    elif i +1 < len(words) and words[i-1] == "." and words[i+1] == ".":
+    elif i + 1 < len(words) and words[i - 1] == "." and words[i + 1] == ".":
         operand.usability += 1
     elif len(words) == 1:
         operand.initialization += 1
@@ -33,18 +34,19 @@ def countingOperands(words, i):
         operand.usability += 1
     return operand
 
-#delete one of the same object and define usebility
+
+# delete one of the same object and define usebility
 def deleteRepeatObj(listOfObj):
     i = 0
     while i < len(listOfObj):
-        j = i +1
+        j = i + 1
         while j < len(listOfObj):
             if listOfObj[i].name == listOfObj[j].name:
                 listOfObj[i].initialization = listOfObj[i].initialization + listOfObj[j].initialization
                 listOfObj[i].usability = listOfObj[i].usability + listOfObj[j].usability
                 del listOfObj[j]
             else:
-                j +=1
+                j += 1
         i += 1
     i = 0
     while i < len(listOfObj):
@@ -53,7 +55,8 @@ def deleteRepeatObj(listOfObj):
         i += 1
     return listOfObj
 
-#finding operators and operands
+
+# finding operators and operands
 def findingOperators(words):
     i = 0
     listOfOperators = []
@@ -66,18 +69,21 @@ def findingOperators(words):
             if res != 0:
                 listOfOperators.append(countingOperators(word))  # добавляю в список операторов
             else:
-                if not(len(words[i-1]) > 0  and  words[i-1] == "=" and words[i] >= "0" and words[i] <= "9"):
-                     listOfOperands.append(countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
+                if not (len(words[i - 1]) > 0 and words[i - 1] == "=" and words[i] >= "0" and words[i] <= "9"):
+                    listOfOperands.append(
+                        countingOperands(words, i))  # отправляем в какую-то функцию вычислять операнды
         elif len(word) > 1:
-            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word, 0) != 0 or sourses.methods_of_language.get(word, 0) != 0:
+            if sourses.operators_of_language_multi.get(word, 0) != 0 or sourses.word_operators_of_language.get(word,
+                                                                                                               0) != 0 or sourses.methods_of_language.get(
+                    word, 0) != 0:
                 listOfOperators.append(countingOperators(word))
             else:
-                if not (len(words[i - 1]) > 0 and words[i - 1] == "=" and (bool(word.isdigit))):
-                    listOfOperands.append(countingOperands(words, i))
+                listOfOperands.append(countingOperands(words, i))
         i += 1
     return listOfOperators, listOfOperands
 
-#define list of words without the of being operand and operator together
+
+# define list of words without the of being operand and operator together
 def findDot(line):
     i = 0
     resultLine = []
@@ -85,7 +91,7 @@ def findDot(line):
         str = line[i]
         word = findBrackets(str)
         if len(word) != 1:
-            k = len(word) -1
+            k = len(word) - 1
             del line[i]
             while k >= 0:
                 str1 = word[k]
@@ -101,13 +107,16 @@ def findDot(line):
 
     return resultLine
 
-#finding simbols in words which is in operators_bracket vocabulary and addition space before and after them
+
+# finding simbols in words which is in operators_bracket vocabulary and addition space before and after them
 def findBrackets(word):
     k = 0
     while k < len(word) and k + 1 != " ":
         i = 1
         while i <= len(sourses.operators_bracket):
-            if k+1 < len(word) and word[k+1] != '=' and word[k] == sourses.operators_bracket[i] or k == len(word)-1 and word[k] == sourses.operators_bracket[i]:
+            j = 0
+            if k + 1 < len(word) and word[k + 1] != '=' and word[k] == sourses.operators_bracket[i] or k == len(
+                    word) - 1 and word[k] == sourses.operators_bracket[i]:
                 if k > 0 and word[k] != '=':
                     if k != 0:
                         word = word[0:k] + " " + word[k] + " " + word[k + 1: len(word)]
