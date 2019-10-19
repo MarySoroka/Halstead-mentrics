@@ -102,6 +102,50 @@ def editingOperatorsList(listOfOperators):
             else:
                 j += 1
         i += 1
+    i = 0
+    while i < len(listOfOperators):
+        if listOfOperators[i].name == 'if':
+            j = 0
+            while j < len(listOfOperators):
+                if listOfOperators[j].name == 'else':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                    break
+                else:
+                    j += 1
+        elif listOfOperators[i].name == 'try':
+            j = 0
+            while j < len(listOfOperators):
+                if listOfOperators[j].name == 'catch':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                    j = 0
+                    while j < len(listOfOperators):
+                        if listOfOperators[j].name == 'finally':
+                            if listOfOperators[i].amount > listOfOperators[j].amount:
+                                listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                                listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                            else:
+                                listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                                del listOfOperators[j]
+                elif listOfOperators[j].name == 'finally':
+                    if listOfOperators[i].amount > listOfOperators[j].amount:
+                        listOfOperators[j].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        listOfOperators[i].amount = listOfOperators[i].amount - listOfOperators[j].amount
+                    else:
+                        listOfOperators[i].name = listOfOperators[i].name + '..' + listOfOperators[j].name
+                        del listOfOperators[j]
+                else:
+                    j += 1
+        i += 1
     return listOfOperators
 
 
