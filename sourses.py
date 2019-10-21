@@ -152,7 +152,8 @@ methods_of_language = {
     "start": 25,
     "swap": 26,
     "collect": 27,
-    "sort": 28
+    "sort": 28,
+    "times": 29
 }
 separators = {" ", ",", "{", "}"}
 

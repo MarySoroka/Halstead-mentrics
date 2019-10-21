@@ -67,7 +67,7 @@ def createRandomArray = { size ->
 def bubbleSort = { array ->
   (array.size()-1).times {
     ((array.size()-1)-it).times {
-      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+      array[it] < array[it+1] ?: array.swap(array, it,it+1)
     }
   }
   array
@@ -106,7 +106,7 @@ def sleepSort = {list ->
 def bubbleSort = { array ->
   (array.size()-1).times {
     ((array.size()-1)-it).times {
-      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+      array[it] < array[it+1] ?:array.swap(array, it,it+1)
     }
   }
   array
@@ -144,7 +144,7 @@ def sleepSort = {list ->
 def bubbleSort = { array ->
   (array.size()-1).times {
     ((array.size()-1)-it).times {
-      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+      array[it] < array[it+1] ?: array.swap(array, it,it+1)
     }
   }
   array
@@ -179,10 +179,10 @@ def sleepSort = {list ->
       }
       result
     }
-def bubbleSort = { array ->
+def bSort = { array ->
   (array.size()-1).times {
     ((array.size()-1)-it).times {
-      array[it] < array[it+1] ?: Collections.swap(array, it,it+1)
+      array[it] < array[it+1] ?: array.swap(array, it,it+1)
     }
   }
   array
